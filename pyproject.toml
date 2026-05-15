@@ -4,7 +4,7 @@ build-backend = "pdm.backend"
 
 [project]
 name = "nonebot-plugin-set-essence-msg"
-version = "0.1.0"
+version = "0.0.1"
 description = "QQ群精华消息管理插件 - 支持设置、移除和查看群聊精华消息"
 authors = [
     {name = "Your Name", email = "zlqdqwe@126.com"},
