@@ -1,0 +1,73 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.6  # 更新到最新
+    hooks:
+      - id: ruff-format
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.14.1  # 更新到最新
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - types-requests
+          - types-python-dateutil
+          - pydantic>=2.0.0
+          - nonebot2>=2.0.0
+        args: [--ignore-missing-imports, --follow-imports=silent]
+
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0  # 保持或更新
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+
+  # 注释掉 safety（因为之前的问题）
+  # - repo: https://github.com/pyupio/safety
+  #   rev: 3.2.7
+  #   hooks:
+  #     - id: safety
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0  # 从 v4.6.0 更新到 v5.0.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: trailing-whitespace
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: requirements-txt-fixer
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: [--maxkb=1000]
+      - id: debug-statements
+      - id: fix-encoding-pragma
+        args: [--remove]
+      - id: check-ast
+
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.42.0  # 更新到最新
+    hooks:
+      - id: markdownlint
+        args: ["--fix", "--disable", "MD013", "--enable", "MD034", "--"]
+        files: \.(md|mdown|markdown)$
+
+  # - repo: https://github.com/codespell-project/codespell
+  #   rev: v2.4.1  # 更新到最新
+  #   hooks:
+  #     - id: codespell
+  #       args: [--write-changes, --ignore-words-list, "ans", "te", "hist", "fom"]
+  #       exclude: ^(.*\.lock|.*\.min\.js|.*\.map|.*\.patch|.*\.po|.*\.pot|\.venv|\.git|\.mypy_cache|\.pytest_cache|\.ruff_cache|__pycache__)
+
+  - repo: https://github.com/executablebooks/mdformat
+    rev: 0.7.18  # 更新到最新
+    hooks:
+      - id: mdformat
+        additional_dependencies:
+          - mdformat-gfm
+          - mdformat-frontmatter
+          - mdformat-pyproject
+        files: \.(md|mdown|markdown)$

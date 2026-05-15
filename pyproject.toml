@@ -1,0 +1,62 @@
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[project]
+name = "nonebot-plugin-set-essence-msg"
+version = "0.1.0"
+description = "QQ群精华消息管理插件 - 支持设置、移除和查看群聊精华消息"
+authors = [
+    {name = "Your Name", email = "zlqdqwe@126.com"},
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.9"
+keywords = ["nonebot", "qq", "essence", "精华消息", "群管"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Framework :: NoneBot",
+    "Topic :: Communications :: Chat",
+]
+dependencies = [
+    "nonebot2>=2.0.0",
+    "nonebot-adapter-onebot>=2.0.0",
+]
+
+[project.urls]
+homepage = "https://github.com/zlqd123/nonebot-plugin-set-essence-msg"
+repository = "https://github.com/zlqd123/nonebot-plugin-set-essence-msg"
+documentation = "https://github.com/zlqd123/nonebot-plugin-set-essence-msg"
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit>=3.0.0",  # 声明开发依赖
+    "ruff>=0.6.0",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "C4"]
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.build]
+includes = ["nonebot_plugin_set_essence_msg"]
+
+[tool.nonebot]
+plugin_dirs = ["plugins"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+testpaths = ["tests"]
