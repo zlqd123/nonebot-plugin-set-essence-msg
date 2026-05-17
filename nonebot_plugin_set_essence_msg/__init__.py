@@ -1,13 +1,13 @@
 import asyncio
 from collections import defaultdict
 
-from nonebot import get_driver, on_command
+from nonebot import on_command
 from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent
 from nonebot.exception import FinishedException
 from nonebot.log import logger
 from nonebot.plugin import PluginMetadata
 
-from .config import Config
+from .config import Config, plugin_config
 
 # 插件元数据
 __plugin_meta__ = PluginMetadata(
@@ -23,10 +23,6 @@ __plugin_meta__ = PluginMetadata(
 # 全局冷却存储
 _cooldown_store: dict[str, dict[str, float]] = defaultdict(dict)
 
-# 获取配置
-driver = get_driver()
-plugin_config = Config(**driver.config.dict())
-
 
 def is_group_enabled(group_id: int) -> bool:
     """检查群聊是否启用插件"""
@@ -37,13 +33,13 @@ def is_group_enabled(group_id: int) -> bool:
 
 
 def is_privileged_user(event: GroupMessageEvent) -> bool:
-    """检查是否为特权用户（无冷却限制）"""
-    # 检查是否为群管理员或群主
     if event.sender.role in ["admin", "owner"]:
         return True
 
-    # 检查是否为机器人超级用户
     try:
+        from nonebot import get_driver
+
+        driver = get_driver()
         superusers: set[str] = getattr(driver.config, "superusers", set())
         if str(event.user_id) in superusers:
             return True
